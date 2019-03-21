@@ -115,6 +115,7 @@ class GravesAttention(nn.Module):
         # attention weights
         phi_t = g_t * torch.exp(-0.5 * sig_t * (mu_t_ - j)**2)
         alpha_t = self.COEF * torch.sum(phi_t, 1)
+        alpha_t = alpha_t.unsqueeze(1)
 
         c_t = torch.bmm(alpha_t, context).transpose(0, 1).squeeze(0)
         return c_t, mu_t, alpha_t
